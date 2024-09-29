@@ -7,15 +7,6 @@
 
 import SwiftUI
 
-struct Card: Identifiable, Equatable {
-    let id = UUID()
-    let value: String
-    let numericValue: Int
-    let suit: String
-}
-
-//♥️♦️♠️♣️
-
 struct ContentView: View {
     @State private var playerCards: [Card] = [
         Card(value: "3", numericValue: 3, suit: "♥️"),
@@ -89,35 +80,7 @@ struct ContentView: View {
     }
 }
 
-struct CardView: View {
-    let card: Card
-    
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color.white)
-                .shadow(radius: 2)
-            
-            VStack {
-                HStack(alignment: .bottom) {
-                    VStack {
-                        Text(card.value)
-                        Text(card.suit)
-                    }
-                    Spacer()
-                }
-                Spacer()
-                Text(card.value)
-                    .font(.largeTitle)
-                Spacer()
-                Spacer()
-                Spacer()
-            }
-            .frame(maxWidth: .infinity)
-        }
-        //.frame(width: 100, height: 150)
-    }
-}
+
 
 #Preview {
     ContentView()
