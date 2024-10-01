@@ -18,6 +18,7 @@
 		1D1182662CA9BEEB001D6CCF /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1182652CA9BEEB001D6CCF /* Card.swift */; };
 		1D11826B2CAAF9ED001D6CCF /* GameViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D11826A2CAAF9ED001D6CCF /* GameViewViewModel.swift */; };
 		1D11826F2CAB075F001D6CCF /* CardStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D11826E2CAB075F001D6CCF /* CardStackView.swift */; };
+		1DD41B922CAC3335006F377C /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD41B912CAC3335006F377C /* CustomButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		1D1182652CA9BEEB001D6CCF /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		1D11826A2CAAF9ED001D6CCF /* GameViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewViewModel.swift; sourceTree = "<group>"; };
 		1D11826E2CAB075F001D6CCF /* CardStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStackView.swift; sourceTree = "<group>"; };
+		1DD41B912CAC3335006F377C /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomButton.swift; path = BlackJackSwiftUI/CustomButton.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 		1D06A0082C9884F300789703 /* BlackJackSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				1DD41B902CAC3317006F377C /* Components */,
 				1D1182692CAAF9BD001D6CCF /* ViewModel */,
 				1D1182682CA9BF08001D6CCF /* View */,
 				1D1182672CA9BEFF001D6CCF /* Model */,
@@ -161,6 +164,15 @@
 				1D11826A2CAAF9ED001D6CCF /* GameViewViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		1DD41B902CAC3317006F377C /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				1DD41B912CAC3335006F377C /* CustomButton.swift */,
+			);
+			name = Components;
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,6 +309,7 @@
 				1D1182642CA9BA3B001D6CCF /* CardView.swift in Sources */,
 				1D11826F2CAB075F001D6CCF /* CardStackView.swift in Sources */,
 				1D06A00A2C9884F300789703 /* BlackJackSwiftUIApp.swift in Sources */,
+				1DD41B922CAC3335006F377C /* CustomButton.swift in Sources */,
 				1D1182662CA9BEEB001D6CCF /* Card.swift in Sources */,
 				1D11826B2CAAF9ED001D6CCF /* GameViewViewModel.swift in Sources */,
 			);
