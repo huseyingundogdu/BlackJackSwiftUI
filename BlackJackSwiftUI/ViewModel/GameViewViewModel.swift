@@ -16,6 +16,7 @@ class GameViewViewModel: ObservableObject {
     @Published var dealerValue: Int = 0
     @Published var playerValue: Int = 0
     
+    @Published var isAlertShowed = false
     @Published var isGameFinished = false
     @Published var isPlayerWon = false
     
@@ -85,6 +86,7 @@ class GameViewViewModel: ObservableObject {
         }
         
         if value > 21 {
+            isAlertShowed = true
             isGameFinished = true
         }
         return value
@@ -125,28 +127,38 @@ class GameViewViewModel: ObservableObject {
         
         isGameFinished = true
         
-        dealerValue = calculateTheDealerValue()
-        playerValue = calculateThePlayerValue()
-        
-        if dealerValue <= 16 {
-            drawCardForDealer()
-            stand()
-        } else if dealerValue > 16 && dealerValue <= 21{
-            if dealerValue > playerValue {
-                print("dealer wins")
-                isPlayerWon = false
-            } else if dealerValue == playerValue {
-                print("draw")
-            } else {
-                print("player wins")
-                isPlayerWon = true
-                
-            }
-        } else {
-            print("player wins")
-            isPlayerWon = true
+        dealerValue = 0
+        for dealerCard in dealerCards {
+            dealerValue += dealerCard.numericValue
         }
         
+        playerValue = calculateThePlayerValue()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            
+            if self.dealerValue <= 16 {
+                self.drawCardForDealer()
+                self.stand()
+            } else if self.dealerValue > 16 && self.dealerValue <= 21{
+                if self.dealerValue > self.playerValue {
+                    print("dealer wins")
+                    self.isPlayerWon = false
+                    self.isAlertShowed = true
+                } else if self.dealerValue == self.playerValue {
+                    print("draw")
+                    self.isAlertShowed = true
+                } else {
+                    print("player wins")
+                    self.isPlayerWon = true
+                    self.isAlertShowed = true
+                    
+                }
+            } else {
+                print("player wins")
+                self.isPlayerWon = true
+                self.isAlertShowed = true
+            }
+        }
     }
     
     func resetTheGame() {
@@ -156,5 +168,6 @@ class GameViewViewModel: ObservableObject {
         playerValue = 0
         isPlayerWon = false
         isGameFinished = false
+        isAlertShowed = false
     }
 }

@@ -15,6 +15,12 @@ struct CardView: View {
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.white)
                 .shadow(radius: 2)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(.clear)
+                        .stroke(.black)
+                        .padding(7)
+                }
             
             VStack {
                 HStack {

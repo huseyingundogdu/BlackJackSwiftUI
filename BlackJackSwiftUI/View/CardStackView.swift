@@ -29,8 +29,10 @@ struct CardStackView: View {
                             .offset(x: geo.size.width / 2)
                     } else {
                         if index == 0 && isDealer && !isGameFinished {
-                            RoundedRectangle(cornerRadius: 10)
+                            Image("back")
+                                .resizable()
                                 .frame(width: cardWidth, height: cardHeight)
+                                .scaledToFill()
                         } else {
                             CardView(card: card)
                                 .frame(
@@ -41,6 +43,7 @@ struct CardStackView: View {
                         }
                     }
                 }
+                .transition(.push(from: .trailing))
             }
         }
     }

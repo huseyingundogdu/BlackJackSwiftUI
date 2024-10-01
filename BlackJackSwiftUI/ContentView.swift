@@ -12,13 +12,21 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
+            Image("table")
+                .resizable()
+                .ignoresSafeArea()
+                
+            
             VStack {
                 CardStackView(cards: vm.dealerCards, isDealer: true, isGameFinished: vm.isGameFinished)
+                    .frame(height: 300)
                 
                 HStack(alignment: .center) {
                     
                     CustomButton(title: "Stand", width: 150) {
-                        vm.stand()
+                        withAnimation {
+                            vm.stand()
+                        }
                     }
                     
                     VStack {
@@ -30,26 +38,29 @@ struct ContentView: View {
                     .frame(width: 50)
                     
                     CustomButton(title: "Hit", width: 150) {
-                        vm.hit()
+                        withAnimation {
+                            vm.hit()
+                        }
                     }
+                    
                     
                 }
                 .frame(maxWidth: .infinity)
                 
                 CardStackView(cards: vm.playerCards, isDealer: false, isGameFinished: vm.isGameFinished)
+                    .frame(height: 300)
+                    
+                
             }
-            .ignoresSafeArea()
-            .alert(vm.isPlayerWon ? "Player Won" : "Dealer Won", isPresented: $vm.isGameFinished) {
+            .padding()
+            .alert(vm.isPlayerWon ? "Player Won" : "Dealer Won", isPresented: $vm.isAlertShowed) {
                 Button("Ok", role: .cancel) {
                     vm.resetTheGame()
                     vm.startTheGame()
                 }
-                
             } message: {
                 Text("Dealer: \(vm.dealerValue) \n Player: \(vm.playerValue)")
             }
-            
-
         }
     }
 }
