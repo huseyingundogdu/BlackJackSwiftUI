@@ -9,8 +9,10 @@ import SwiftUI
 
 struct CustomButton: View {
     var title: String
+    var width: CGFloat?
+    var height: CGFloat?
     var action: (() -> Void)
-
+    
     @State private var isPressed: Bool = false
     
     var body: some View {
@@ -18,14 +20,18 @@ struct CustomButton: View {
             action()
         } label: {
             Text(title)
-                .font(.custom("Arial Rounded MT Bold", size: 55))
-                .foregroundStyle(isPressed ? .red : .gray)
+                .font(.custom("Arial Rounded MT Bold", size: 35))
+                .foregroundStyle(.white)
         }
-        .buttonStyle(.plain)
+        .frame(width: width, height: height)
+        .buttonStyle(.bordered)
+        .background(isPressed ? .red : .gray)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
         .controlSize(.large)
         .onLongPressGesture { } onPressingChanged: { isPressing in
             isPressed = isPressing
         }
+    
     }
 }
 
@@ -33,4 +39,5 @@ struct CustomButton: View {
     CustomButton(title: "Hit") {
         print("Button Pressed")
     }
+    .frame(width: 150)
 }

@@ -11,43 +11,41 @@ struct ContentView: View {
     @StateObject private var vm = GameViewViewModel()
     
     var body: some View {
-        
-        VStack {
-            
-            CardStackView(cards: vm.dealerCards, isDealer: true, isGameFinished: vm.isGameFinished)
-            
+        ZStack {
             VStack {
-                HStack {
-                    Spacer()
-                    Button("Hit") {
-                        withAnimation {
-                            vm.hit()
-                        }
+                CardStackView(cards: vm.dealerCards, isDealer: true, isGameFinished: vm.isGameFinished)
+                
+                HStack(alignment: .center) {
+                    
+                    CustomButton(title: "Stand", width: 150) {
+                        
                     }
-                    Spacer()
+                    
                     VStack {
-                        Text("card remain: " + vm.deck.count.description)
-                        Text("dealer: " + vm.dealerValue)
-                        Text("player: " + vm.playerValue)
+                        Text(vm.dealerValue)
+                            .font(.custom("Arial Rounded MT Bold", size: 35))
+                        Text(vm.playerValue)
+                            .font(.custom("Arial Rounded MT Bold", size: 35))
                     }
-                    Spacer()
-                    Button("Stand") {
-                        vm.isGameFinished.toggle()
+                    .frame(width: 50)
+                    
+                    CustomButton(title: "Hit", width: 150) {
+                        print("Hit Pressed")
                     }
-                    Spacer()
+                    
+                }
+                .frame(maxWidth: .infinity)
+                
+                CardStackView(cards: vm.playerCards, isDealer: false, isGameFinished: vm.isGameFinished)
+            }
+            .ignoresSafeArea()
+            .alert(vm.isPlayerWon ? "Player Won" : "Dealer Won", isPresented: $vm.isGameFinished) {
+                
+                Button("OK"){
+                    //Reset The Game
                 }
             }
-            
-            CardStackView(cards: vm.playerCards, isDealer: false, isGameFinished: vm.isGameFinished)
-            
         }
-        .ignoresSafeArea()
-        .alert(vm.isPlayerWon ? "Player Won" : "Dealer Won", isPresented: $vm.isGameFinished) {
-            
-            Button("OK"){
-                //Reset The Game
-            }
-        } 
     }
 }
 
