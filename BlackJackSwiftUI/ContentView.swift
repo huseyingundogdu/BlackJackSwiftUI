@@ -8,75 +8,46 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var playerCards: [Card] = [
-        Card(value: "3", numericValue: 3, suit: "♥️"),
-        Card(value: "3", numericValue: 3, suit: "♣️"),
-    ]
-    @State private var dealerCards: [Card] = []
-    @State private var deck: [Card] = []
-    //@State private var gameStatus = "Player's turn"
+    @StateObject private var vm = GameViewViewModel()
     
     var body: some View {
         
         VStack {
-            GeometryReader { geo in
-                VStack(spacing: 0) {
-                    ZStack {
-                        let cardWidth = geo.size.width / 2
-                        let cardHeight = geo.size.height / 2
-                        let leftSideSpacingFactor = (geo.size.width / 2) / CGFloat(playerCards.count - 1)
-                        
-                        ForEach(Array(playerCards.enumerated()), id: \.element.id) { index, card in
-                            if card == playerCards.last {
-                                CardView(card: card)
-                                    .frame(
-                                        width: cardWidth,
-                                        height: cardHeight
-                                    )
-                                    .offset(x: geo.size.width / 2)
-                            } else {
-                                CardView(card: card)
-                                    .frame(
-                                        width: cardWidth,
-                                        height: cardHeight
-                                    )
-                                    .offset(x: CGFloat(index) * leftSideSpacingFactor)
-                            }
+            
+            CardStackView(cards: vm.dealerCards, isDealer: true, isGameFinished: vm.isGameFinished)
+            
+            VStack {
+                HStack {
+                    Spacer()
+                    Button("Hit") {
+                        withAnimation {
+                            vm.hit()
                         }
                     }
-                    
-                    ZStack {
-                        let cardWidth = geo.size.width / 2
-                        let cardHeight = geo.size.height / 2
-                        let leftSideSpacingFactor = (geo.size.width / 2) / CGFloat(playerCards.count - 1)
-                        
-                        ForEach(Array(playerCards.enumerated()), id: \.element.id) { index, card in
-                            if card == playerCards.last {
-                                CardView(card: card)
-                                    .frame(
-                                        width: cardWidth,
-                                        height: cardHeight
-                                    )
-                                    .offset(x: geo.size.width / 2)
-                            } else {
-                                CardView(card: card)
-                                    .frame(
-                                        width: cardWidth,
-                                        height: cardHeight
-                                    )
-                                    .offset(x: CGFloat(index) * leftSideSpacingFactor)
-                            }
-                        }
+                    Spacer()
+                    VStack {
+                        Text("card remain: " + vm.deck.count.description)
+                        Text("dealer: " + vm.dealerValue)
+                        Text("player: " + vm.playerValue)
                     }
+                    Spacer()
+                    Button("Stand") {
+                        vm.isGameFinished.toggle()
+                    }
+                    Spacer()
                 }
             }
             
-            Button("Add new card") {
-                withAnimation {
-                    playerCards.append(Card(value: "3", numericValue: 3, suit: "♦️"))
-                }
-            }
+            CardStackView(cards: vm.playerCards, isDealer: false, isGameFinished: vm.isGameFinished)
+            
         }
+        .ignoresSafeArea()
+        .alert(vm.isPlayerWon ? "Player Won" : "Dealer Won", isPresented: $vm.isGameFinished) {
+            
+            Button("OK"){
+                //Reset The Game
+            }
+        } 
     }
 }
 
