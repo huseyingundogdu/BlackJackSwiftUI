@@ -13,8 +13,8 @@ class GameViewViewModel: ObservableObject {
     @Published var dealerCards: [Card] = []
     @Published var playerCards: [Card] = []
     
-    @Published var dealerValue: String = ""
-    @Published var playerValue: String = ""
+    @Published var dealerValue: Int = 0
+    @Published var playerValue: Int = 0
     
     @Published var isGameFinished = false
     @Published var isPlayerWon = false
@@ -70,7 +70,7 @@ class GameViewViewModel: ObservableObject {
         }
     }
     
-    private func startTheGame() {
+    func startTheGame() {
         drawCardForPlayer()
         drawCardForDealer()
         drawCardForPlayer()
@@ -78,7 +78,7 @@ class GameViewViewModel: ObservableObject {
     }
     
     //Value Calculation
-    private func calculateThePlayerValue() -> String {
+    private func calculateThePlayerValue() -> Int {
         var value = 0
         for card in playerCards {
             value += card.numericValue
@@ -87,10 +87,10 @@ class GameViewViewModel: ObservableObject {
         if value > 21 {
             isGameFinished = true
         }
-        return value.description
+        return value
     }
     
-    private func calculateTheDealerValue() -> String {
+    private func calculateTheDealerValue() -> Int {
         var value = 0
         
         for card in dealerCards {
@@ -98,25 +98,63 @@ class GameViewViewModel: ObservableObject {
         }
         
         if isGameFinished {
-            return value.description
+            return value
         } else {
-            return (value - dealerCards[0].numericValue).description
+            return (value - dealerCards[0].numericValue)
         }
     }
     
     //Hit Button
     func hit() {
+        //Draw card for player
+        //Calculate the position
+                            // True -> Show the result
+        //Game is Finished
+                            // False -> Game continue
         drawCardForPlayer()
         playerValue = calculateThePlayerValue()
     }
     
     //Stand Button
     func stand() {
-        isGameFinished.toggle()
+        // Game is Finished = true
+        // Calculate the dealers value
+        // If < 16 -> Draw Card -> Stand
+        // Else If -> If Dealer > Player -> Dealers wins else -> Player Wins
+        // Else If -> Dealer > 21 -> Player Wins
         
-        if Int(calculateTheDealerValue())! <= 16 {
+        isGameFinished = true
+        
+        dealerValue = calculateTheDealerValue()
+        playerValue = calculateThePlayerValue()
+        
+        if dealerValue <= 16 {
             drawCardForDealer()
-            
+            stand()
+        } else if dealerValue > 16 && dealerValue <= 21{
+            if dealerValue > playerValue {
+                print("dealer wins")
+                isPlayerWon = false
+            } else if dealerValue == playerValue {
+                print("draw")
+            } else {
+                print("player wins")
+                isPlayerWon = true
+                
+            }
+        } else {
+            print("player wins")
+            isPlayerWon = true
         }
+        
+    }
+    
+    func resetTheGame() {
+        dealerCards = []
+        dealerValue = 0
+        playerCards = []
+        playerValue = 0
+        isPlayerWon = false
+        isGameFinished = false
     }
 }

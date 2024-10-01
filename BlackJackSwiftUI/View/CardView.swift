@@ -29,14 +29,14 @@ struct CardView: View {
                 
                 Spacer()
                 
-                HStack {
-                    Spacer()
+                HStack {                    
                     VStack {
                         Text(card.value)
                         Text(card.suit)
                             .foregroundStyle(.black)
                     }
                     .font(.largeTitle)
+                    Spacer()
                 }
             }
             .padding()

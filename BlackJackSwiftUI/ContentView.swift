@@ -18,19 +18,19 @@ struct ContentView: View {
                 HStack(alignment: .center) {
                     
                     CustomButton(title: "Stand", width: 150) {
-                        
+                        vm.stand()
                     }
                     
                     VStack {
-                        Text(vm.dealerValue)
+                        Text(vm.dealerValue.description)
                             .font(.custom("Arial Rounded MT Bold", size: 35))
-                        Text(vm.playerValue)
+                        Text(vm.playerValue.description)
                             .font(.custom("Arial Rounded MT Bold", size: 35))
                     }
                     .frame(width: 50)
                     
                     CustomButton(title: "Hit", width: 150) {
-                        print("Hit Pressed")
+                        vm.hit()
                     }
                     
                 }
@@ -40,11 +40,16 @@ struct ContentView: View {
             }
             .ignoresSafeArea()
             .alert(vm.isPlayerWon ? "Player Won" : "Dealer Won", isPresented: $vm.isGameFinished) {
-                
-                Button("OK"){
-                    //Reset The Game
+                Button("Ok", role: .cancel) {
+                    vm.resetTheGame()
+                    vm.startTheGame()
                 }
+                
+            } message: {
+                Text("Dealer: \(vm.dealerValue) \n Player: \(vm.playerValue)")
             }
+            
+
         }
     }
 }
